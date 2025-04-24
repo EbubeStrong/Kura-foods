@@ -1,0 +1,133 @@
+.create-account-container {
+  width: 100%;
+  max-width: 390px;
+  min-height: 100vh;
+  padding: 20px;
+  background: linear-gradient(135deg, #e1ffe1 0%, #fafafa 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-right: 10px;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 4px;
+  background-color: #ffffff;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-indicator {
+  width: 33%;
+  height: 100%;
+  background-color: #21d406;
+  border-radius: 2px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #000000;
+  margin-bottom: 24px;
+}
+
+.user-type-toggle {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.toggle-button {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.toggle-button.active {
+  background-color: #21d406;
+  color: #ffffff;
+}
+
+.toggle-button:not(.active) {
+  background-color: #e1ffe1;
+  color: #000000;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #000000;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #dadada;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.form-group input:focus {
+  border-color: #21d406;
+}
+
+.signup-button {
+  width: 100%;
+  padding: 16px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: #aaaaaa;
+  color: #ffffff;
+}
+
+.signup-button.active {
+  background-color: #21d406;
+}
+
+.signup-button:disabled {
+  cursor: not-allowed;
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 14px;
+  color: #444444;
+}
+
+.login-link a {
+  color: #21d406;
+  text-decoration: underline;
+  font-weight: 500;
+}
