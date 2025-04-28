@@ -23,7 +23,7 @@ function App() {
   return (
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <Router>
-        <div className="app">
+        <div className="app block md:hidden sm:block">
           <Routes>
             <Route path="/" element={<SplashScreen />} />
             <Route path="/loading" element={<LoadingScreen />} />
