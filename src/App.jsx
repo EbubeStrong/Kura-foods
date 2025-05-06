@@ -26,7 +26,7 @@ function App() {
         <div className="app block md:hidden sm:block">
           <Routes>
             <Route path="/" element={<SplashScreen />} />
-            <Route path="/loading" element={<LoadingScreen />} />
+            {/* <Route path="/loading" element={<LoadingScreen />} /> */}
             <Route path="/onboarding" element={<OnboardingScreen />} />
             <Route path="/create-account" element={<CreateAccountPage />} />
             <Route path="/login" element={<LoginPage />} />
