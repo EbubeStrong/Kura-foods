@@ -1,57 +1,67 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input";
-import { Label } from "../components/ui/label";
-import { toast } from "sonner";
-import { useAuth } from "../context/AuthContext";
-import elipseLogo from "../assets/TopRightEllipse.png";
-import Logo from "../assets/images/logo.png";
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { Button } from "../components/ui/button"
+import { Input } from "../components/ui/input"
+import { Label } from "../components/ui/label"
+import { toast } from "sonner"
+import { useAuth } from "../context/AuthContext"
+import elipseLogo from "../assets/TopRightEllipse.png"
+import Logo from "../assets/images/logo.png"
 
 const LoginPage = () => {
-  const navigate = useNavigate();
-  const { login } = useAuth();
+  const navigate = useNavigate()
+  const { login } = useAuth()
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-  });
-  const [isLoading, setIsLoading] = useState(false);
+  })
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setFormData({
       ...formData,
       [name]: value,
-    });
-  };
+    })
+  }
 
   const isFormFilled = () => {
-    return formData.email && formData.password;
-  };
+    return formData.email && formData.password
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (isFormFilled()) {
-      setIsLoading(true);
+      setIsLoading(true)
       try {
-        const success = await login(formData.email, formData.password);
+        const success = await login(formData.email, formData.password)
 
         if (success) {
-          toast.success("Login successful!");
-          navigate("/home");
+          // Get the user type from session storage to determine where to navigate
+          const userJson = sessionStorage.getItem("user")
+          const user = userJson ? JSON.parse(userJson) : null
+
+          toast.success("Login successful!")
+
+          // Navigate based on user type
+          if (user && user.userType === "donor") {
+            navigate("/donor-home")
+          } else {
+            navigate("/home")
+          }
         } else {
-          toast.error("Invalid email or password");
+          toast.error("Invalid email or password")
         }
       } catch (error) {
-        toast.error("An error occurred during login");
-        console.error(error);
+        toast.error("An error occurred during login")
+        console.error(error)
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
     }
-  };
+  }
 
   return (
     <>
@@ -61,19 +71,11 @@ const LoginPage = () => {
 
         {/* Layer 2: Ellipse logo */}
         <div className="absolute left-0 top-0 z-10">
-          <img
-            src={elipseLogo || "/placeholder.svg"}
-            alt=""
-            className="z-[100] w-[350px]"
-          />
+          <img src={elipseLogo || "/placeholder.svg"} alt="" className="z-[100] w-[350px]" />
 
           {/* Layer 3: Center logo */}
           <div className="absolute left-0 z-20 ml-[-4rem] mt-[-10px] top-4 flex flex-col gap-5 justify-center items-center w-full">
-            <img
-              src={Logo || "/placeholder.svg"}
-              alt="Logo"
-              className="w-16 h-16"
-            />
+            <img src={Logo || "/placeholder.svg"} alt="Logo" className="w-16 h-16" />
 
             <h1 className="text-3xl font-bold text-gray-800 mb-8">
               Welcome <br /> Back
@@ -83,10 +85,7 @@ const LoginPage = () => {
       </div>
 
       <div className="w-full px-6 max-w-md mx-auto absolute top-[12rem] flex items-center flex-col justify-center z-50 rounded-xl">
-        <form
-          onSubmit={handleSubmit}
-          className="space-y-6 shadow-lg p-4 w-full mx-auto ml-[30px]"
-        >
+        <form onSubmit={handleSubmit} className="space-y-6 shadow-lg p-4 w-full mx-auto ml-[30px]">
           <div className="space-y-2">
             <Label htmlFor="email" className="text-gray-700 font-medium">
               Email
@@ -120,9 +119,7 @@ const LoginPage = () => {
           <Button
             type="submit"
             className={`w-full py-3 text-white text-lg font-semibold rounded-md transition ${
-              isFormFilled()
-                ? "bg-[#34c759] hover:bg-[#2eb350]"
-                : "bg-gray-400 cursor-not-allowed"
+              isFormFilled() ? "bg-[#34c759] hover:bg-[#2eb350]" : "bg-gray-400 cursor-not-allowed"
             }`}
             disabled={!isFormFilled() || isLoading}
           >
@@ -132,16 +129,13 @@ const LoginPage = () => {
 
         <p className="text-center mt-8 text-gray-600 text-sm">
           Don't have an account?{" "}
-          <a
-            href="/create-account"
-            className="text-[#34c759] font-medium hover:underline"
-          >
+          <a href="/create-account" className="text-[#34c759] font-medium hover:underline">
             Create an account
           </a>
         </p>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default LoginPage;
+export default LoginPage

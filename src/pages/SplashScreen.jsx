@@ -80,7 +80,8 @@ const SplashScreen = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -10 }}
                 transition={{ duration: 0.5 }}
-                className="ml-4 text-white text-lg"
+                className="ml-4 text-white "
+                style={{fontSize: "34px"}}
               >
                 Welcome
               </motion.div>

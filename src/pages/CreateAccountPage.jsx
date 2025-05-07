@@ -144,7 +144,12 @@ const CreateAccountPage = () => {
 
       if (success) {
         toast.success("Account created successfully!")
-        navigate("/home")
+        // Navigate based on user type
+        if (userType === "donor") {
+          navigate("/donor-home")
+        } else {
+          navigate("/home")
+        }
       } else {
         toast.error("Failed to create account. Email might already be in use.")
       }
