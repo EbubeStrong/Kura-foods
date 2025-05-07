@@ -1,20 +1,23 @@
 "use client";
 
 import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
-// import { ArrowLeft } from "../components/Icons";
+import { toast } from "sonner";
+import { useAuth } from "../context/AuthContext";
 import elipseLogo from "../assets/TopRightEllipse.png";
 import Logo from "../assets/images/logo.png";
 
 const LoginPage = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -28,11 +31,25 @@ const LoginPage = () => {
     return formData.email && formData.password;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (isFormFilled()) {
-      console.log("Login submitted:", formData);
-      // Add your login logic here
+      setIsLoading(true);
+      try {
+        const success = await login(formData.email, formData.password);
+
+        if (success) {
+          toast.success("Login successful!");
+          navigate("/home");
+        } else {
+          toast.error("Invalid email or password");
+        }
+      } catch (error) {
+        toast.error("An error occurred during login");
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -44,28 +61,32 @@ const LoginPage = () => {
 
         {/* Layer 2: Ellipse logo */}
         <div className="absolute left-0 top-0 z-10">
-          <img src={elipseLogo} alt="" className="z-[100] w-[350px]" />
+          <img
+            src={elipseLogo || "/placeholder.svg"}
+            alt=""
+            className="z-[100] w-[350px]"
+          />
 
           {/* Layer 3: Center logo */}
           <div className="absolute left-0 z-20 ml-[-4rem] mt-[-10px] top-4 flex flex-col gap-5 justify-center items-center w-full">
-            <img src={Logo} alt="Logo" className="w-16 h-16" />
+            <img
+              src={Logo || "/placeholder.svg"}
+              alt="Logo"
+              className="w-16 h-16"
+            />
 
             <h1 className="text-3xl font-bold text-gray-800 mb-8">
               Welcome <br /> Back
             </h1>
           </div>
         </div>
-
-        {/* <button
-          className="p-2 rounded-md bg-gray-100 hover:bg-gray-200 transition z-20 absolute top-4 left-4"
-          onClick={() => navigate("/onboarding")}
-        >
-          <ArrowLeft />
-        </button> */}
       </div>
 
-      <div className="w-full px-6  max-w-md mx-auto absolute top-[12rem] flex items-center flex-col justify-center z-50 rounded-xl">
-        <form onSubmit={handleSubmit} className="space-y-6 shadow-lg p-4 w-full mx-auto ml-[30px]">
+      <div className="w-full px-6 max-w-md mx-auto absolute top-[12rem] flex items-center flex-col justify-center z-50 rounded-xl">
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-6 shadow-lg p-4 w-full mx-auto ml-[30px]"
+        >
           <div className="space-y-2">
             <Label htmlFor="email" className="text-gray-700 font-medium">
               Email
@@ -103,14 +124,14 @@ const LoginPage = () => {
                 ? "bg-[#34c759] hover:bg-[#2eb350]"
                 : "bg-gray-400 cursor-not-allowed"
             }`}
-            disabled={!isFormFilled()}
+            disabled={!isFormFilled() || isLoading}
           >
-            Login
+            {isLoading ? "Logging in..." : "Login"}
           </Button>
         </form>
 
         <p className="text-center mt-8 text-gray-600 text-sm">
-          Don’t have an account?{" "}
+          Don't have an account?{" "}
           <a
             href="/create-account"
             className="text-[#34c759] font-medium hover:underline"
