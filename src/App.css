@@ -28,3 +28,6 @@
   background-size: 400% 400%;
 }
 
+button{
+  cursor: pointer;
+}

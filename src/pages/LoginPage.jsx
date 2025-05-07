@@ -1,15 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
-import { ArrowLeft } from "../components/Icons";
-// import elipseLogo from "../assets/TopRightEllipse.png";
+// import { ArrowLeft } from "../components/Icons";
+import elipseLogo from "../assets/TopRightEllipse.png";
+import Logo from "../assets/images/logo.png";
 
 const LoginPage = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -37,47 +38,38 @@ const LoginPage = () => {
 
   return (
     <>
-      {/* <div className="relative w-full">
-        <div className="absolute left-0 top-0">
-          <img src={elipseLogo} alt="" />
-        </div>
-      </div> */}
+      <div className="relative w-full">
+        {/* Layer 1: Background glow / curve */}
+        <div className="absolute z-0 top-[-80px] left-[-100px] w-[420px] h-[260px] rounded-[30%_10%_60%_10%] animate-gradient-move shadow-xl bg-gradient-to-r from-purple-500 to-pink-500 opacity-30"></div>
 
-      <div className="relative bg-white overflow-hidden">
-        {/* Animated Ellipse */}
-        <div className="absolute top-[-80px] left-[-100px] w-[300px] h-[300px] rounded-full animate-gradient-move shadow-xl">
-          {/* Optional Logo inside */}
-          <div className="flex justify-center items-center w-full h-full">
-            <img
-              src="/path-to-your-logo.png"
-              alt="Logo"
-              className="w-16 h-16"
-            />
+        {/* Layer 2: Ellipse logo */}
+        <div className="absolute left-0 top-0 z-10">
+          <img src={elipseLogo} alt="" className="z-[100] w-[350px]" />
+
+          {/* Layer 3: Center logo */}
+          <div className="absolute left-0 z-20 ml-[-4rem] mt-[-10px] top-4 flex flex-col gap-5 justify-center items-center w-full">
+            <img src={Logo} alt="Logo" className="w-16 h-16" />
+
+            <h1 className="text-3xl font-bold text-gray-800 mb-8">
+              Welcome <br /> Back
+            </h1>
           </div>
         </div>
 
-        {/* Your normal page content goes here */}
-        <div className="relative z-10 p-6">
-          <h1 className="text-2xl font-bold">Welcome Back</h1>
-          {/* Other login form content */}
-        </div>
+        {/* <button
+          className="p-2 rounded-md bg-gray-100 hover:bg-gray-200 transition z-20 absolute top-4 left-4"
+          onClick={() => navigate("/onboarding")}
+        >
+          <ArrowLeft />
+        </button> */}
       </div>
 
-      <div className="min-h-screen p-6 relative ">
-        <div className="flex flex-col gap-3 items-start mb-6">
-          <button className="p-1" onClick={() => navigate("/onboarding")}>
-            <ArrowLeft />
-          </button>
-          <div className="shadow w-full h-3 bg-white rounded-full overflow-hidden">
-            <div className="h-full w-[30%] bg-[#34c759] rounded-full"></div>
-          </div>
-        </div>
-
-        <h1 className="text-2xl font-semibold mb-6">Login</h1>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="w-full px-6  max-w-md mx-auto absolute top-[12rem] flex items-center flex-col justify-center z-50 rounded-xl">
+        <form onSubmit={handleSubmit} className="space-y-6 shadow-lg p-4 w-full mx-auto ml-[30px]">
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email" className="text-gray-700 font-medium">
+              Email
+            </Label>
             <Input
               id="email"
               name="email"
@@ -85,11 +77,14 @@ const LoginPage = () => {
               placeholder="Enter your email"
               value={formData.email}
               onChange={handleInputChange}
+              className="border border-gray-300 focus:ring-2 focus:ring-[#34c759] focus:border-[#34c759] rounded-md px-4 py-2"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password" className="text-gray-700 font-medium">
+              Password
+            </Label>
             <Input
               id="password"
               name="password"
@@ -97,13 +92,16 @@ const LoginPage = () => {
               placeholder="Enter your password"
               value={formData.password}
               onChange={handleInputChange}
+              className="border border-gray-300 focus:ring-2 focus:ring-[#34c759] focus:border-[#34c759] rounded-md px-4 py-2"
             />
           </div>
 
           <Button
             type="submit"
-            className={`w-full mt-6 ${
-              isFormFilled() ? "bg-[#34c759] hover:bg-[#2eb350]" : "bg-gray-400"
+            className={`w-full py-3 text-white text-lg font-semibold rounded-md transition ${
+              isFormFilled()
+                ? "bg-[#34c759] hover:bg-[#2eb350]"
+                : "bg-gray-400 cursor-not-allowed"
             }`}
             disabled={!isFormFilled()}
           >
@@ -111,10 +109,13 @@ const LoginPage = () => {
           </Button>
         </form>
 
-        <p className="text-center mt-6 text-gray-600">
-          Don't have an account?{" "}
-          <a href="/create-account" className="text-[#34c759] underline">
-            create an account
+        <p className="text-center mt-8 text-gray-600 text-sm">
+          Don’t have an account?{" "}
+          <a
+            href="/create-account"
+            className="text-[#34c759] font-medium hover:underline"
+          >
+            Create an account
           </a>
         </p>
       </div>

@@ -31,7 +31,8 @@ function App() {
       <Router>
         <div className="app block md:hidden sm:block font-poppins">
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<SplashScreen />} />
+            <Route path="/home" element={<HomePage />} />
             {/* <Route path="/loading" element={<LoadingScreen />} /> */}
             <Route path="/onboarding" element={<OnboardingScreen />} />
             <Route path="/create-account" element={<CreateAccountPage />} />
